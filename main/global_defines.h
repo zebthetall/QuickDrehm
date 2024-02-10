@@ -68,7 +68,7 @@ typedef enum {
 } axisRotation;
 
 // TODO change this depending on your imu rotation
-axisRotation imuRotation[AXIS_COUNT] = {ROT_180_DEG, ROT_180_DEG, ROT_180_DEG}; // roll, pitch, yaw rotation
+axisRotation imuRotation[AXIS_COUNT] = {ROT_0_DEG, ROT_0_DEG, ROT_0_DEG}; // roll, pitch, yaw rotation
 
 // TODO Run the function calculateGyroBias() in setup() to find these values.
 float acc_bias[AXIS_COUNT] = {
@@ -127,6 +127,9 @@ float gyro_bias[AXIS_COUNT] = {
 //========================================================================================================================//
 //                                                     DEFINED STRUCTS                                                    //
 //========================================================================================================================//
+
+//===================================================SCALER STRUCTS=======================================================//
+
 // Used in helper.ino to scale ranges between an input range and an output range
 typedef struct rangeScaler_s {
   float scaleFactor;
@@ -148,7 +151,8 @@ typedef struct boundedRangeScaler_s {
   float min;
   float max;
 } boundedRangeScaler_t;
-//============================================FILTER STRUCTS=======================================================//
+
+//===================================================FILTER STRUCTS=======================================================//
 
 typedef struct pt1Filter_s {
   float state;
@@ -180,7 +184,31 @@ typedef struct notchFilter_s {
     float weight;
 } notchFilter_t;
 
-//============================================DYNAMIC NOTCH STUFF CAN BE IGNORED=======================================================//
+//======================================================PID STRUCTS=======================================================//
+
+typedef struct attitudePid_s {
+  float kp; // pterm constant
+  // no need for ki term in the attitude controller
+  float kd; // dterm constant
+
+  float previous_error_or_measurement[AXIS_COUNT]; // last error or measurement, used for calculating dterm
+} attitudePid_t;
+
+typedef struct ratePid_s {
+  float kp[AXIS_COUNT]; // pterm constant
+  float ki[AXIS_COUNT]; // iterm constant
+  float kd[AXIS_COUNT]; // dterm constant
+  float kff[AXIS_COUNT]; // ffterm constant, should only be used in fixed wing flight
+
+  pt2Filter_t dterm_lowpass[AXIS_COUNT];
+  float previous_error_or_measurement[AXIS_COUNT]; // last error or measurement, used for calculating dterm
+  float integral[AXIS_COUNT]; // the integral of error used for calculating iterm
+
+  float max_iterm_windup;
+} ratePid_t;
+
+//========================================DYNAMIC NOTCH STUFF CAN BE IGNORED==============================================//
+
 // conversion from time to frequency domain and filtering wizardry happens here
 #define DYN_NOTCH_COUNT_MAX 5
 #define SDFT_SAMPLE_SIZE 72
@@ -252,7 +280,7 @@ typedef struct dynNotch_s {
   float   pt1LooptimeS;
 } dynNotch_t;
 
-//============================================APPLIED FILTER STRUCTS=======================================================//
+//===============================================APPLIED FILTER STRUCTS===================================================//
 
 typedef struct rpmFilter_s {
   notchFilter_t notch[AXIS_COUNT][MOTOR_COUNT];
@@ -276,4 +304,3 @@ typedef struct accFilters_s {
 typedef struct rcFilters_s {
   pt3Filter_t lowpassFilter[4];
 } rcFilters_t;
-
