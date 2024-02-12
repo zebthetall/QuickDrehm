@@ -27,73 +27,73 @@
 void initRcScalers(midpointRangeScaler_t rc_scalers[]) {
   midpointRangeScalerInit(
     &rc_scalers[RC_ROLL], // update roll rc_scaler
-    174.0f, 992.0f, 1811.0f, // input min, mid and max
+    172.0f, 992.0f, 1811.0f, // input min, mid and max
     -1.0f, 0.0f, 1.0f, // output min, mid and max don't typically change from a -1.0f to 1.0f range
     2.0f); // deadband
 
   midpointRangeScalerInit(
     &rc_scalers[RC_PITCH], // update pitch rc_scaler
-    174.0f, 992.0f, 1811.0f, // input min, mid and max
+    172.0f, 992.0f, 1811.0f, // input min, mid and max
     -1.0f, 0.0f, 1.0f, // output min, mid and max don't typically change from a -1.0f to 1.0f range
     2.0f); // deadband
 
   midpointRangeScalerInit(
     &rc_scalers[RC_THROTTLE], // update throttle rc_scaler
-    174.0f, 992.0f, 1811.0f, // input min, mid and max
+    172.0f, 992.0f, 1811.0f, // input min, mid and max
     0.0f, 0.5, 1.0f, // output min, mid and max don't typically change from a 0.5 to 1.0f range for throttle
     2.0f); // deadband
 
   midpointRangeScalerInit(
     &rc_scalers[RC_YAW], // update yaw rc_scaler
-    174.0f, 992.0f, 1811.0f, // input min, mid and max
+    172.0f, 992.0f, 1811.0f, // input min, mid and max
     -1.0f, 0.0f, 1.0f, // output min, mid and max don't typically change from a -1.0f to 1.0f range
     2.0f); // deadband
 
   midpointRangeScalerInit(
     &rc_scalers[RC_ARM], // update arm rc_scaler
-    191.0f, 992.0f, 1792.0f, // input min, mid and max
+    172.0f, 992.0f, 1811.0f, // input min, mid and max
     0.0f, 0.5, 1.0f, // output min, mid and max for switches keeping to a 0.0f to 1.0f range is normally best, for pots set it up as desired
     0.0f); // switches and aux channels typically need no deadband
 
   midpointRangeScalerInit(
-    &rc_scalers[RC_AUX1], // update aux1 rc_scaler
-    191.0f, 992.0f, 1792.0f, // input min, mid and max
+    &rc_scalers[RC_MODE], // update aux1 rc_scaler
+    172.0f, 992.0f, 1811.0f, // input min, mid and max
     0.0f, 0.5, 1.0f, // output min, mid and max for switches keeping to a 0.0f to 1.0f range is normally best, for pots set it up as desired
     0.0f); // deadband
 
   midpointRangeScalerInit(
-    &rc_scalers[RC_AUX2], // update aux2 rc_scaler
-    191.0f, 992.0f, 1792.0f, // input min, mid and max
+    &rc_scalers[RC_FLIGHT_CONFIG], // update aux2 rc_scaler
+    172.0f, 992.0f, 1811.0f, // input min, mid and max
     0.0f, 0.5, 1.0f, // output min, mid and max for switches keeping to a 0.0f to 1.0f range is normally best, for pots set it up as desired
     0.0f); // switches and aux channels typically need no deadband
 
   midpointRangeScalerInit(
     &rc_scalers[RC_AUX3], // update aux3 rc_scaler
-    191.0f, 992.0f, 1792.0f, // input min, mid and max
+    172.0f, 992.0f, 1811.0f, // input min, mid and max
     0.0f, 0.5, 1.0f, // output min, mid and max for switches keeping to a 0.0f to 1.0f range is normally best, for pots set it up as desired
     0.0f); // switches and aux channels typically need no deadband
 
   midpointRangeScalerInit(
     &rc_scalers[RC_AUX4], // update aux4 rc_scaler
-    191.0f, 992.0f, 1792.0f, // input min, mid and max
+    172.0f, 992.0f, 1811.0f, // input min, mid and max
     0.0f, 0.5, 1.0f, // output min, mid and max for switches keeping to a 0.0f to 1.0f range is normally best, for pots set it up as desired
     0.0f); // switches and aux channels typically need no deadband
 
   midpointRangeScalerInit(
     &rc_scalers[RC_AUX5], // update aux5 rc_scaler
-    191.0f, 992.0f, 1792.0f, // input min, mid and max
+    172.0f, 992.0f, 1811.0f, // input min, mid and max
     0.0f, 0.5, 1.0f, // output min, mid and max for switches keeping to a 0.0f to 1.0f range is normally best, for pots set it up as desired
     0.0f); // switches and aux channels typically need no deadband
 
   midpointRangeScalerInit(
     &rc_scalers[RC_AUX6], // update aux6 rc_scaler
-    191.0f, 992.0f, 1792.0f, // input min, mid and max
+    172.0f, 992.0f, 1811.0f, // input min, mid and max
     0.0f, 0.5, 1.0f, // output min, mid and max for switches keeping to a 0.0f to 1.0f range is normally best, for pots set it up as desired
     0.0f); // switches and aux channels typically need no deadband
 
   midpointRangeScalerInit(
     &rc_scalers[RC_AUX7], // update aux7 rc_scaler
-    191.0f, 992.0f, 1792.0f, // input min, mid and max
+    172.0f, 992.0f, 1811.0f, // input min, mid and max
     0.0f, 0.5, 1.0f, // output min, mid and max for switches keeping to a 0.0f to 1.0f range is normally best, for pots set it up as desired
     0.0f); // switches and aux channels typically need no deadband
 }

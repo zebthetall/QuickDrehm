@@ -308,7 +308,7 @@ void setup() {
   // Initialize radio communication
   radioSetup();
 
-  // delay(1000); // Add extra delay so that we can get a radio connection first. Increase value if things aren't working.
+  delay(1000); // Add extra delay so that we can get a radio connection first. Increase value if things aren't working.
   // findRcChannelLimits(RC_ARM); // RC limits printed to serial monitor. Paste these in radio.ino, then comment this out forever.
 
   // Initialize IMU communication
@@ -317,7 +317,7 @@ void setup() {
   delay(5);
 
   // Get IMU error to zero accelerometer and gyro readings, assuming vehicle is level when powered up
-  // calculateGyroBias(); // Calibration parameters printed to serial monitor. Paste these in the user specified variables section, then comment this out forever.
+  //calculateGyroBias(); // Calibration parameters printed to serial monitor. Paste these in the user specified variables section, then comment this out forever.
 
   // Indicate entering main loop with 3 quick blinks
   setupBlink(3, 160, 70); // numBlinks, upTime (ms), downTime (ms)
@@ -419,7 +419,7 @@ void loop() {
   float setpoints_rpy[AXIS_COUNT]; // these are the desired angles or rotation
 
   // TODO add extra modes for fixedwing flight modes with different setpoints
-  if (rc_channels[RC_AUX1] > 0.55) { // lets call aux1 angle mode for now, you can rename it later
+  if (rc_channels[RC_MODE] > 0.55) { // lets call aux1 angle mode for now, you can rename it later
     // These setpoints are in deg, in other words what angle you want to be at, except for yaw which is in deg/s
     // keep the max angle below about 60
 
@@ -455,7 +455,7 @@ void loop() {
 
     // put your fixed wing into angle mode and slowly turn it to the right while failsafed
     // really only works for fixed wing aircraft
-    rc_channels[RC_AUX1] = 1.0f; // set the aircraft to angle mode
+    rc_channels[RC_MODE] = 1.0f; // set the aircraft to angle mode
     setpoints_rpy[AXIS_ROLL] = 25.0; // tilt right slightly to help turn
     setpoints_rpy[AXIS_PITCH] = 5.0; // pitch down to help keep some airspeed and prevent stalling
 
@@ -499,7 +499,7 @@ void loop() {
   );
 */
   float pidSums[AXIS_COUNT] = {0.0f, 0.0f, 0.0f}; // will be used in the mixer
-  if (rc_channels[RC_AUX1] > 0.55) { // lets call aux1 angle mode for now, you can rename it later
+  if (rc_channels[RC_MODE] > 0.55) { // lets call aux1 angle mode for now, you can rename it later
 
     // will modify setpoints_rpy to be used as the setpoint input to ratePidApply
     attitudePidApply(
