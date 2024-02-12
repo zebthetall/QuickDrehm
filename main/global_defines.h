@@ -42,15 +42,15 @@
 // #define USE_DSM_RX
 
 // TODO ensure that these match the channels they go to, this is setup for standard opentx/edgetx channel order AETR
-#define RC_ROLL 0 // can also be called RC_AILERON if desired
-#define RC_PITCH 1 // can also be called RC_ELEVATOR if desired
-#define RC_THROTTLE 2
+#define RC_ROLL 1 // can also be called RC_AILERON if desired
+#define RC_PITCH 2 // can also be called RC_ELEVATOR if desired
+#define RC_THROTTLE 0
 #define RC_YAW 3 // can also be called RC_RUDDER if desired
 #define RC_ARM 4 // if using ELRS this channel should always be your arming channel
 
 // TODO rename to match aux channels function if desired
-#define RC_AUX1 5 // rename if you want channels to have mode names
-#define RC_AUX2 6 // rename if you want channels to have mode names
+#define RC_MODE 5 // rename if you want channels to have mode names
+#define RC_FLIGHT_CONFIG 6 // rename if you want channels to have mode names
 #define RC_AUX3 7 // rename if you want channels to have mode names
 #define RC_AUX4 8 // rename if you want channels to have mode names
 #define RC_AUX5 9 // rename if you want channels to have mode names
@@ -71,15 +71,16 @@ typedef enum {
 axisRotation imuRotation[AXIS_COUNT] = {ROT_0_DEG, ROT_0_DEG, ROT_0_DEG}; // roll, pitch, yaw rotation
 
 // TODO Run the function calculateGyroBias() in setup() to find these values.
-float gyro_bias[AXIS_COUNT] = {
-  0.0f, // roll
-  0.0f, // pitch
-  0.0f, // yaw
-};
 float acc_bias[AXIS_COUNT] = {
-  0.0f, // x
-  0.0f, // y
-  0.0f, // z
+  -0.00122f, // x
+  -0.00569f, // y
+  -0.07293f, // z
+};
+
+float gyro_bias[AXIS_COUNT] = {
+  -2.85395f, // roll
+  -0.46892f, // pitch
+  -0.48108f, // yaw
 };
 
 
