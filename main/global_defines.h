@@ -91,13 +91,13 @@ float gyro_bias[AXIS_COUNT] = {
 
 // TODO rename to match servo function, IE SERVO_FRONT_LEFT
 // pin 0
-#define SERVO_0 0 // rename to match what the servo does
+#define SERVO_LEFT_CANARD 0 // rename to match what the servo does
 // pin 1
-#define SERVO_1 1 // rename to match what the servo does
+#define SERVO_RIGHT_CANARD 1 // rename to match what the servo does
 // pin 5
-#define SERVO_2 2 // rename to match what the servo does
+#define SERVO_RIGHT_AILERON 2 // rename to match what the servo does
 // pin 6
-#define SERVO_3 3 // rename to match what the servo does
+#define SERVO_LEFT_AILERON 3 // rename to match what the servo does
 // pin 10
 #define SERVO_4 4 // rename to match what the servo does
 // pin 11
