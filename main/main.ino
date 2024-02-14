@@ -103,13 +103,13 @@ void setup() {
 // TODO easily debug any part of your code when needed
 // Example of how to print values copy and paste this into the function loop() wherever you want debugging
 /*
-  bool should_print = shouldPrint(current_time, 10.0f); // Print data at 10hz
+ bool should_print = shouldPrint(micros(), 10.0f); // Print data at 10hz
   if (should_print) {
     printDebug("gyro roll", raw_gyro[AXIS_ROLL]);
     printDebug(", pitch", raw_gyro[AXIS_PITCH]);
     printDebug(", yaw", raw_gyro[AXIS_YAW]);
     printNewLine();
-  }
+  } 
 */
 
 //========================================================================================================================//
@@ -318,7 +318,11 @@ void loop() {
     motor_commands, // output motor values
     servo_commands // output servo values
   );
-
+//  bool should_print = shouldPrint(current_time, 10.0f); // Print data at 10hz
+//   if (should_print) {
+//     printDebug("rc roll", rc_channels[RC_ROLL]);
+//     printNewLine();
+//   }
   // Throttle cut check
   bool motor_cut = motorCutStatus(rc_channels[RC_THROTTLE]); // Return if we should turn motors off by default motors are turned off when throttle is low edit this function to your liking
 
@@ -389,8 +393,8 @@ void controlMixer(float rc_channels[], float pidSums[], float motor_commands[], 
   
   // TODO mix inputs to servo commands
   // servos need to be scaled to work properly with the servo scaling that was set earlier
-  servo_commands[SERVO_LEFT_CANARD] = 0.0f;
-  servo_commands[SERVO_RIGHT_CANARD] = 0.0f;
+  servo_commands[SERVO_LEFT_CANARD] = rc_channels[RC_ROLL] * 90.0f;
+  servo_commands[SERVO_RIGHT_CANARD] = rc_channels[RC_ROLL] * 90.0f;;
   servo_commands[SERVO_RIGHT_AILERON] = 0.0f;
   servo_commands[SERVO_LEFT_AILERON] = 0.0f;
   servo_commands[SERVO_4] = 0.0f;
