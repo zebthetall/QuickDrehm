@@ -62,7 +62,7 @@ void attitudePidApply(attitudePid_t *pid, float setpoint_angles[], float gravity
     float pterm = pid->kp * error;
     
     // TODO calculate Dterm which is the derivative of error (faster) or the negative derivative of gyro (smoother) times a scaler
-    float derivative = (error - previous_error_or_measurement[axis]) / (1.0 / LOOPRATE)f;
+    float derivative = (error - pid->previous_error_or_measurement[axis]) * LOOPRATE;
     // only keep one previous_error_or_measurement, remove the one you are not using
     //pid->previous_error_or_measurement[axis] = gravity_vector[axis];
     pid->previous_error_or_measurement[axis] = error;
@@ -199,28 +199,28 @@ void updatePids(
 void ratePidApply(ratePid_t *pid, float setpoint[], float gyro[], float pidSums[]) {
   for (int axis = 0; axis < AXIS_COUNT; axis++) {
     // TODO calculate error
-    float error = 0.0f;
+    float error = setpoint[axis] - gyro[axis];
 
     // TODO calculate Pterm which is a scaler of error
-    float pterm = pid->kp[axis] * 0.0f;
+    float pterm = pid->kp[axis] * error;
 
     // TODO calculate Iterm which is the integral of error times a scaler
-    pid->integral[axis] += pid->ki[axis] * 0.0f;
+    pid->integral[axis] += pid->ki[axis] * (error * DT);
 
     pid->integral[axis] = constrain(pid->integral[axis], -pid->max_iterm_windup, pid->max_iterm_windup);
     float iterm = pid->integral[axis];
 
     // TODO calculate Dterm which is the derivative of error (faster) or the negative derivative of gyro (smoother) times a scaler
-    float derivative = 0.0f;
+    float derivative = (error - pid->previous_error_or_measurement[axis]) * LOOPRATE;
     // only keep one previous_error_or_measurement, remove the one you are not using
-    pid->previous_error_or_measurement[axis] = gyro[axis];
+    //pid->previous_error_or_measurement[axis] = gyro[axis];
     pid->previous_error_or_measurement[axis] = error;
 
     derivative = pt2FilterApply(&pid->dterm_lowpass[axis], derivative); // filter the dterm, helps with noise
     float dterm = pid->kd[axis] * derivative;
 
     // TODO calculate FFterm which is a scaler of the setpoint (Should be really only be used in fixed wing flight modes)
-    float ffterm = pid->kff[axis] * 0.0f;
+    float ffterm = pid->kff[axis] * setpoint[axis];
     
     // pidsum is the output of the PID controller, simply add all pid terms together
     pidSums[axis] = pterm + iterm + dterm + ffterm;
