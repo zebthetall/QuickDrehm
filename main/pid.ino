@@ -59,12 +59,12 @@ void attitudePidApply(attitudePid_t *pid, float setpoint_angles[], float gravity
     float error = error_array[axis];
 
     // TODO calculate Pterm which is a scaler of error
-    float pterm = pid->kp * 0.0;
+    float pterm = pid->kp * error;
     
     // TODO calculate Dterm which is the derivative of error (faster) or the negative derivative of gyro (smoother) times a scaler
-    float derivative = 0.0f;
+    float derivative = (error - previous_error_or_measurement[axis]) / (1.0 / LOOPRATE)f;
     // only keep one previous_error_or_measurement, remove the one you are not using
-    pid->previous_error_or_measurement[axis] = gravity_vector[axis];
+    //pid->previous_error_or_measurement[axis] = gravity_vector[axis];
     pid->previous_error_or_measurement[axis] = error;
 
     float dterm = pid->kd * derivative;
