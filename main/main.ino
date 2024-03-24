@@ -298,7 +298,7 @@ void loop() {
     );
   }
 
-//==========================================================CONTROL MIXER==========================================================//
+//==========================================================CONTROL ==========================================================//
   float servo_commands[SERVO_COUNT];
   float motor_commands[MOTOR_COUNT];
 
@@ -379,6 +379,9 @@ void loop() {
 void controlMixer(float rc_channels[], float pidSums[], float motor_commands[], float servo_commands[]) {
 
   float throttle = rc_channels[RC_THROTTLE];
+  float pitch_command = pidSums[AXIS_PITCH];
+  float roll_command = pidSums[AXIS_ROLL];
+  float yaw_command = pidSums[AXIS_YAW];
 
   // Positive roll = roll right
   // Positive pitch = pitch down
@@ -386,17 +389,17 @@ void controlMixer(float rc_channels[], float pidSums[], float motor_commands[], 
 
   // TODO mix inputs to motor commands
   // motor commands should be between 0 and 1
-  motor_commands[BACK_LEFT] = rc_channels[RC_THROTTLE] * 1.0f;
-  motor_commands[FRONT_RIGHT] = rc_channels[RC_THROTTLE] * 1.0f;
-  motor_commands[FRONT_LEFT] = rc_channels[RC_THROTTLE] * 1.0f;
-  motor_commands[BACK_RIGHT] = rc_channels[RC_THROTTLE] * 1.0f;
+  motor_commands[BACK_LEFT] = rc_channels[RC_THROTTLE] + pitch_command - yaw_command + roll_command * 1.0f;
+  motor_commands[FRONT_RIGHT] = rc_channels[RC_THROTTLE] - pitch_command - yaw_command - roll_command * 1.0f;
+  motor_commands[FRONT_LEFT] = rc_channels[RC_THROTTLE] - pitch_command + yaw_command + roll_command * 1.0f;
+  motor_commands[BACK_RIGHT] = rc_channels[RC_THROTTLE] + pitch_command + yaw_command - roll_command * 1.0f;
   
   // TODO mix inputs to servo commands
   // servos need to be scaled to work properly with the servo scaling that was set earlier
-  servo_commands[SERVO_LEFT_CANARD] = rc_channels[RC_PITCH] * 90.0f;
-  servo_commands[SERVO_RIGHT_CANARD] = rc_channels[RC_PITCH] * 90.0f;;
-  servo_commands[SERVO_RIGHT_AILERON] = rc_channels[RC_PITCH] * 90.0f;
-  servo_commands[SERVO_LEFT_AILERON] = rc_channels[RC_PITCH] * 90.0f;
+  servo_commands[SERVO_LEFT_CANARD] = -90.0f + pidSums[AXIS_YAW] * -55;
+  servo_commands[SERVO_RIGHT_CANARD] = -90.0f + pidSums[AXIS_YAW] * 55;
+  servo_commands[SERVO_RIGHT_AILERON] = -90.0f + pidSums[AXIS_YAW] * 55;
+  servo_commands[SERVO_LEFT_AILERON] = -90.0f + pidSums[AXIS_YAW] * -55;
   servo_commands[SERVO_4] = 0.0f;
   servo_commands[SERVO_5] = 0.0f;
   servo_commands[SERVO_6] = 0.0f;
