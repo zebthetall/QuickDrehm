@@ -116,7 +116,6 @@ void attitudeError(float attitude_setpoint[], float gravity_vector[], float erro
 }
 
 //======================================================RATE PID=======================================================//
-
 // TODO tune the rate pid controller
 void ratePidInit(ratePid_t *pid) {
 // pid scaling used in BF/inav
