@@ -62,7 +62,7 @@ void initRcScalers(midpointRangeScaler_t rc_scalers[]) {
     0.0f); // deadband
 
   midpointRangeScalerInit(
-    &rc_scalers[RC_FLIGHT_CONFIG], // update aux2 rc_scaler
+    &rc_scalers[RC_TRANSITION], // update aux2 rc_scaler
     172.0f, 992.0f, 1811.0f, // input min, mid and max
     0.0f, 0.5, 1.0f, // output min, mid and max for switches keeping to a 0.0f to 1.0f range is normally best, for pots set it up as desired
     0.0f); // switches and aux channels typically need no deadband
