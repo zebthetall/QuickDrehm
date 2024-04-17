@@ -246,18 +246,18 @@ void loop() {
 
 // update pid values based on flight mode
 // roll pids
-float roll_kp = applyTransition(60.0f, 30.0f); // First number is the multirotor value, second value is the fixed wing value
-float roll_ki = applyTransition(30.0f, 10.0f); // First number is the multirotor value, second value is the fixed wing value
+float roll_kp = applyTransition(60.0f, 50.0f); // First number is the multirotor value, second value is the fixed wing value
+float roll_ki = applyTransition(30.0f, 30.0f); // First number is the multirotor value, second value is the fixed wing value
 float roll_kd = applyTransition(32.2f, 10.0f); // First number is the multirotor value, second value is the fixed wing value
 float roll_kff = applyTransition(0.0f, 10.0f); // First number is the multirotor value, second value is the fixed wing value
 // pitch pids
-float pitch_kp = applyTransition(60.0f, 30.0f); // First number is the multirotor value, second value is the fixed wing value
-float pitch_ki = applyTransition(30.0f, 10.0f); // First number is the multirotor value, second value is the fixed wing value
+float pitch_kp = applyTransition(60.0f, 50.0f); // First number is the multirotor value, second value is the fixed wing value
+float pitch_ki = applyTransition(30.0f, 30.0f); // First number is the multirotor value, second value is the fixed wing value
 float pitch_kd = applyTransition(44.2f, 10.0f); // First number is the multirotor value, second value is the fixed wing value
 float pitch_kff = applyTransition(0.0f, 10.0f); // First number is the multirotor value, second value is the fixed wing value
 // yaw pids
-float yaw_kp = applyTransition(45.0f, 30.0f); // First number is the multirotor value, second value is the fixed wing value
-float yaw_ki = applyTransition(20.0f, 10.0f); // First number is the multirotor value, second value is the fixed wing value
+float yaw_kp = applyTransition(45.0f, 50.0f); // First number is the multirotor value, second value is the fixed wing value
+float yaw_ki = applyTransition(20.0f, 30.0f); // First number is the multirotor value, second value is the fixed wing value
 float yaw_kd = applyTransition(5.0f, 10.0f); // First number is the multirotor value, second value is the fixed wing value
 float yaw_kff = applyTransition(20.0f, 10.0f); // First number is the multirotor value, second value is the fixed wing value
 
