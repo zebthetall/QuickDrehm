@@ -401,10 +401,10 @@ void controlMixer(float rc_channels[], float pidSums[], float motor_commands[], 
   float mr_br_m = throttle + pitch_command + yaw_command - roll_command * 1.0f;
   
   // multirotor servo commands
-  float mr_slc = -90.0f + pidSums[AXIS_YAW] * -55;
-  float mr_src = -90.0f + pidSums[AXIS_YAW] * 55;
-  float mr_sra = -90.0f + pidSums[AXIS_YAW] * 55;
-  float mr_sla = -90.0f + pidSums[AXIS_YAW] * -55;
+  float mr_slc = pidSums[AXIS_YAW] * -55;
+  float mr_src = pidSums[AXIS_YAW] * 55;
+  float mr_sra = pidSums[AXIS_YAW] * 55;
+  float mr_sla = pidSums[AXIS_YAW] * -55;
 
   // fixed wing motor command
   float fw_bl_m = rc_channels[RC_THROTTLE] -yaw_command * 1.0f;
@@ -419,18 +419,18 @@ void controlMixer(float rc_channels[], float pidSums[], float motor_commands[], 
   float fw_sla = 0.0f + (- pitch_command - roll_command) * 45.0f;
 
   // motor commands
-  motor_commands[BACK_LEFT] = applyTransition(mr_bl_m, fw_bl_m);
-  motor_commands[FRONT_RIGHT] = applyTransition(mr_fr_m, fw_fr_m);
-  motor_commands[FRONT_LEFT] = applyTransition(mr_fl_m, fw_fl_m);
-  motor_commands[BACK_RIGHT] = applyTransition(mr_br_m, fw_br_m);
+  motor_commands[MOTOR_RIGHT] = applyTransition(mr_bl_m, fw_bl_m);
+  motor_commands[MOTOR_1] = applyTransition(mr_fr_m, fw_fr_m);
+  motor_commands[MOTOR_2] = applyTransition(mr_fl_m, fw_fl_m);
+  motor_commands[MOTOR_3] = applyTransition(mr_br_m, fw_br_m);
 
   
   // servo commands
   // servos need to be scaled to work properly with the servo scaling that was set earlier
-  servo_commands[SERVO_LEFT_CANARD] = applyTransition(mr_slc, fw_slc);
-  servo_commands[SERVO_RIGHT_CANARD] = applyTransition(mr_src, fw_src);
-  servo_commands[SERVO_RIGHT_AILERON] = applyTransition(mr_sra, fw_sra);
-  servo_commands[SERVO_LEFT_AILERON] = applyTransition(mr_sla, fw_sla);
+  servo_commands[SERVO_LEFT] = applyTransition(mr_slc, fw_slc);
+  servo_commands[SERVO_RIGHT] = applyTransition(mr_src, fw_src);
+  servo_commands[SERVO_2] = 0.0f;
+  servo_commands[SERVO_3] = 0.0f;
   servo_commands[SERVO_4] = 0.0f;
   servo_commands[SERVO_5] = 0.0f;
   servo_commands[SERVO_6] = 0.0f;

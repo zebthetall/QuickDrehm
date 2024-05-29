@@ -89,15 +89,15 @@ float gyro_bias[AXIS_COUNT] = {
 #define MAX_SERVO_COUNT 9 // don't change this
 #define SERVO_COUNT 9 // no real need to change
 
-// TODO rename to match servo function, IE SERVO_FRONT_LEFT
+// TODO rename to match servo function, IE SERVO_MOTOR_2
 // pin 0
-#define SERVO_LEFT_CANARD 0 // rename to match what the servo does
+#define SERVO_LEFT 0 // rename to match what the servo does
 // pin 1
-#define SERVO_RIGHT_CANARD 1 // rename to match what the servo does
+#define SERVO_RIGHT 1 // rename to match what the servo does
 // pin 5
-#define SERVO_RIGHT_AILERON 2 // rename to match what the servo does
+#define SERVO_2 2 // rename to match what the servo does
 // pin 6
-#define SERVO_LEFT_AILERON 3 // rename to match what the servo does
+#define SERVO_3 3 // rename to match what the servo does
 // pin 10
 #define SERVO_4 4 // rename to match what the servo does
 // pin 11
@@ -112,15 +112,15 @@ float gyro_bias[AXIS_COUNT] = {
 //======================================================MOTOR SETUP=======================================================//
 
 #define MAX_MOTOR_COUNT 6 // don't change this
-#define MOTOR_COUNT 4 // set to your motor count
+#define MOTOR_COUNT 2 // set to your motor count
 
 #define POLE_COUNT 12 // the number of magnets in the motor, must be accurate to get accurate RPM data
 
-// TODO rename to match motor function, IE MOTOR_FRONT_LEFT
-#define BACK_LEFT 0 // rename to match where the motor is or its function
-#define FRONT_RIGHT 1 // rename to match where the motor is or its function
-#define FRONT_LEFT 2 // rename to match where the motor is or its function
-#define BACK_RIGHT 3 // rename to match where the motor is or its function
+// TODO rename to match motor function, IE MOTOR_MOTOR_2
+#define MOTOR_RIGHT 0 // rename to match where the motor is or its function
+#define MOTOR_1 1 // rename to match where the motor is or its function
+#define MOTOR_2 2 // rename to match where the motor is or its function
+#define MOTOR_3 3 // rename to match where the motor is or its function
 #define MOTOR_4 4 // rename to match where the motor is or its function
 #define MOTOR_5 5 // rename to match where the motor is or its function
 

@@ -13,25 +13,25 @@ PWMServo servo[SERVO_COUNT];  // Create servo objects to control a servo or ESC 
 // TODO set up the servo scaling as needed for each servo
 void initServoScales(boundedRangeScaler_t servoScales[]) {
   servoScalerInitHelper(
-    servoScales[SERVO_LEFT_CANARD], 
+    servoScales[SERVO_LEFT], 
     -90.0f, 35.0f, // Servo control surface angle min and max, use a higher then lower number to swap directions
     0.0f, 0.8f, 1.0f // change these if you want to limit servo movement, only takes a range of 0.0-1.0
   );
 
   servoScalerInitHelper(
-    servoScales[SERVO_RIGHT_CANARD], 
+    servoScales[SERVO_RIGHT], 
     35.0f, -90.0f, // Servo control surface angle min and max, use a higher then lower number to swap directions
     0.0f, 0.2f, 1.0f // Servo output min, mid, and max. Modify is servo isn't centering or moving to far. Only takes a range of 0.0-1.0
   );
 
   servoScalerInitHelper(
-    servoScales[SERVO_RIGHT_AILERON], 
+    servoScales[SERVO_2], 
     45.0f, -90.0f, // Servo control surface angle min and max, use a higher then lower number to swap directions
     0.0f, 0.3f, 1.0f // Servo output min, mid, and max. Modify is servo isn't centering or moving to far. Only takes a range of 0.0-1.0
   );
 
   servoScalerInitHelper(
-    servoScales[SERVO_LEFT_AILERON],
+    servoScales[SERVO_3],
     -90.0f, 45.0f, // Servo control surface angle min and max, use a higher then lower number to swap directions
     0.0f, 0.7f, 1.0f // Servo output min, mid, and max. Modify is servo isn't centering or moving to far. Only takes a range of 0.0-1.0
   );
