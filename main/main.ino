@@ -395,40 +395,30 @@ void controlMixer(float rc_channels[], float pidSums[], float motor_commands[], 
 
   // motor commands should be between 0 and 1
   // multirotor motor commands
-  float mr_bl_m = throttle + pitch_command - yaw_command + roll_command * 1.0f;
-  float mr_fr_m = throttle - pitch_command - yaw_command - roll_command * 1.0f;
-  float mr_fl_m = throttle - pitch_command + yaw_command + roll_command * 1.0f;
-  float mr_br_m = throttle + pitch_command + yaw_command - roll_command * 1.0f;
+  float mr_mr = throttle - roll_command * 1.0f;
+  float ml_mr = throttle + roll_command * 1.0f;
   
   // multirotor servo commands
-  float mr_slc = pidSums[AXIS_YAW] * -55;
-  float mr_src = pidSums[AXIS_YAW] * 55;
-  float mr_sra = pidSums[AXIS_YAW] * 55;
-  float mr_sla = pidSums[AXIS_YAW] * -55;
+  float mr_ls = (yaw_command + pitch_command) * -55;
+  float mr_rs = (yaw_command - pitch_command) * 55;
 
   // fixed wing motor command
-  float fw_bl_m = rc_channels[RC_THROTTLE] -yaw_command * 1.0f;
-  float fw_fr_m = rc_channels[RC_THROTTLE] +yaw_command * 1.0f;
-  float fw_fl_m = rc_channels[RC_THROTTLE] -yaw_command * 1.0f;
-  float fw_br_m = rc_channels[RC_THROTTLE] +yaw_command * 1.0f;
+  float mr_fw = throttle + yaw_command * 1.0f;
+  float ml_fw = throttle - yaw_command * 1.0f;
 
   // fixed wing servo command
-  float fw_slc = 0.0f + (+ pitch_command - roll_command) * 35.0f;
-  float fw_src = 0.0f + (+ pitch_command + roll_command )* 35.0f;
-  float fw_sra = 0.0f + (- pitch_command + roll_command )* 45.0f;
-  float fw_sla = 0.0f + (- pitch_command - roll_command) * 45.0f;
+  float fw_ls = 0.0f + (- pitch_command - roll_command) * 35.0f;
+  float fw_rs = 0.0f + (- pitch_command + roll_command )* 35.0f;
 
   // motor commands
-  motor_commands[MOTOR_RIGHT] = applyTransition(mr_bl_m, fw_bl_m);
-  motor_commands[MOTOR_1] = applyTransition(mr_fr_m, fw_fr_m);
-  motor_commands[MOTOR_2] = applyTransition(mr_fl_m, fw_fl_m);
-  motor_commands[MOTOR_3] = applyTransition(mr_br_m, fw_br_m);
+  motor_commands[MOTOR_RIGHT] = applyTransition(mr_mr, mr_fw);
+  motor_commands[MOTOR_LEFT] = applyTransition(ml_mr, ml_fw);
 
   
   // servo commands
   // servos need to be scaled to work properly with the servo scaling that was set earlier
-  servo_commands[SERVO_LEFT] = applyTransition(mr_slc, fw_slc);
-  servo_commands[SERVO_RIGHT] = applyTransition(mr_src, fw_src);
+  servo_commands[SERVO_LEFT] = applyTransition(mr_ls, fw_ls);
+  servo_commands[SERVO_RIGHT] = applyTransition(mr_rs, fw_rs);
   servo_commands[SERVO_2] = 0.0f;
   servo_commands[SERVO_3] = 0.0f;
   servo_commands[SERVO_4] = 0.0f;
