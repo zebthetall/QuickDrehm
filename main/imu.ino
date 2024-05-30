@@ -372,11 +372,19 @@ void Madgwick6DOF(float gyro[], float acc[], bool new_acc, float gyro_dt, float 
   q3 *= quatNorm;
 
   // Compute angles, North West Up
-  attitude_euler[AXIS_ROLL] = atan2(2.0f * (q0 * q1 + q2 * q3), 1.0f - 2.0f * (q1 * q1 + q2 * q2)) * RAD_TO_DEG;
-  attitude_euler[AXIS_PITCH] = -90.0f + acos(2.0f * (q1 * q3 - q0 * q2)) * RAD_TO_DEG;
-  attitude_euler[AXIS_YAW] = atan2(2.0f * (q1 * q2 + q0 * q3), 1.0f - 2.0f * (q2 * q2 + q3 * q3)) * RAD_TO_DEG;
+  attitude_euler[AXIS_ROLL] =  applyTransition((atan2(2.0f * (q1 * q2 + q0 * q3), 1.0f - 2.0f * (q2 * q2 + q3 * q3)) * RAD_TO_DEG), (atan2(2.0f * (q0 * q1 + q2 * q3), 1.0f - 2.0f * (q1 * q1 + q2 * q2)) * RAD_TO_DEG)); // First number is the multirotor value, second value is the fixed wing value
+  attitude_euler[AXIS_PITCH] = applyTransition((-90.0f + acos(2.0f * (q1 * q3 - q0 * q2)) * RAD_TO_DEG) + 90, (-90.0f + acos(2.0f * (q1 * q3 - q0 * q2)) * RAD_TO_DEG)); // First number is the multirotor value, second value is the fixed wing value
+  attitude_euler[AXIS_YAW] =  applyTransition((atan2(2.0f * (q0 * q1 + q2 * q3), 1.0f - 2.0f * (q1 * q1 + q2 * q2)) * RAD_TO_DEG), (atan2(2.0f * (q1 * q2 + q0 * q3), 1.0f - 2.0f * (q2 * q2 + q3 * q3)) * RAD_TO_DEG)); // First number is the multirotor value, second value is the fixed wing value
 
   gravity_vector[AXIS_X] = 2.0f * (q1 * q3 - q0 * q2);
   gravity_vector[AXIS_Y] = 2.0f * (q0 * q1 + q2 * q3);
   gravity_vector[AXIS_Z] = q0 * q0 - q1 * q1 - q2 * q2 + q3 * q3;
+bool should_print = shouldPrint(current_time, 10.0f); // Print data at 50hz
+
+if (should_print) {
+  printDebug("attitude roll", attitude_euler[AXIS_ROLL]);
+  printDebug(", pitch", attitude_euler[AXIS_PITCH]);
+  printDebug(", yaw", attitude_euler[AXIS_YAW]);
+  printNewLine();
+}
 }
